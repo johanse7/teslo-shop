@@ -25,7 +25,6 @@ export const ProductMobileSlideshow = (pops: ProductSlideshowProps) => {
         pagination
         autoplay={{ delay: 2500 }}
         modules={[FreeMode, Autoplay, Pagination]}
-        className="mySwiper2"
       >
         {images.map((image) => (
           <SwiperSlide key={image}>
