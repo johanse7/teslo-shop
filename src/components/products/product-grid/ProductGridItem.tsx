@@ -28,6 +28,7 @@ export const ProductGridItem = ({ product }: ProductGridItemProps) => {
           height={500}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          priority
         />
       </Link>
       <div className="p-4 flex flex-col">

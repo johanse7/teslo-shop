@@ -20,7 +20,7 @@ type ProductSlideshowProps = {
 
 export const ProductSlideshow = (pops: ProductSlideshowProps) => {
   const { images, title, className } = pops;
-  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperObject>(null);
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperObject>();
 
   return (
     <div className={className}>

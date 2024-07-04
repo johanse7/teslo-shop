@@ -1,7 +1,14 @@
-import { ProductMobileSlideshow, ProductSlideshow, QuantitySelector, SizeSelector } from "@/components";
+export const revalidate = 604800; // 7 days;
+
+import { getProductBySlug } from "@/actions";
+import {
+  ProductMobileSlideshow,
+  ProductSlideshow,
+  StockLabel,
+} from "@/components";
 import { titleFont } from "@/config/fonts";
-import { initialData } from "@/seed/seed";
-import { notFound } from "next/navigation";
+import type { Metadata, ResolvingMetadata } from "next";
+import { AddToCart } from "./ui/AddToCart";
 
 type ProductPageProps = {
   params: {
@@ -9,39 +16,62 @@ type ProductPageProps = {
   };
 };
 
-export default function ProductPage({ params }: ProductPageProps) {
+export async function generateMetadata(
+  { params }: ProductPageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
   const { slug } = params;
-  const product = initialData.products.find((product) => product.slug === slug);
+
+  // fetch data
+  const product = await getProductBySlug(slug);
+
+  return {
+    title: product.title,
+    description: product.description,
+    openGraph: {
+      title: product.title,
+      description: product.description,
+      images: [`/product/${product.images[1]}`],
+    },
+  };
+}
+
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { slug } = params;
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     notFound();
   }
 
-  const { title, price, description, sizes, images } = product;
+  const { title, price, description, images } = product;
 
   return (
     <div className="mt-5 mb-20 grid grid-cols-1 md:grid-cols-3 gap-3">
       {/* slideshow*/}
       <div className="col-span-1 md:col-span-2">
         {/* mobile slideshow */}
-        <ProductMobileSlideshow title={title} images={images} className="block md:hidden" />
+        <ProductMobileSlideshow
+          title={title}
+          images={images}
+          className="block md:hidden"
+        />
         {/* desktop slideshow */}
-        <ProductSlideshow title={title} images={images} className="hidden md:block" />
+        <ProductSlideshow
+          title={title}
+          images={images}
+          className="hidden md:block"
+        />
       </div>
       {/* details */}
       <div className="col-span-1 px-5 ">
-        <h1 className={`${titleFont.className} antialiased font-bold text-xl`}>
+        <StockLabel slug={slug} />
+        <h2 className={`${titleFont.className} antialiased font-bold text-xl`}>
           {title}
-        </h1>
+        </h2>
         <p className="text-lg mb-5">${price}</p>
-        {/* selector de talla */}
-        <SizeSelector availableSize={sizes} selectedSize={sizes[0]} />
-        {/* selector de cantidad */}
-
-        <QuantitySelector />
-        {/* add cart button */}
-        <button className="btn-primary my-5">Agregar el carrito</button>
-        {/* description */}
+        <AddToCart product={product} />
         <h3 className="font-bold text-sm">Descripcion</h3>
         <p className="font-light">{description}</p>
       </div>

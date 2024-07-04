@@ -3,7 +3,10 @@ import { inter } from "../config/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Teslo | shop",
+  title: {
+    template: "%s -  Teslo | shop",
+    default: "Home Teslo | shop",
+  },
   description: "Store online",
 };
 
