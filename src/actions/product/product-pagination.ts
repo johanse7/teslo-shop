@@ -51,7 +51,6 @@ export const getPaginateProductsWithImages = async ({
       return {
         ...product,
         images: product.ProductImage.map(({ url }) => url),
-        type: "hats",
       };
     });
 
@@ -66,5 +65,3 @@ export const getPaginateProductsWithImages = async ({
     throw new Error("no se pudo cargar los productos");
   }
 };
-
-

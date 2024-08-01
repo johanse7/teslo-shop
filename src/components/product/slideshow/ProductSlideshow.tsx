@@ -6,11 +6,11 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import "./slideshow.css";
 
-import Image from "next/image";
 import { useState } from "react";
 import { Swiper as SwiperObject } from "swiper";
 import { Autoplay, FreeMode, Navigation, Thumbs } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { ProductImage } from "../product-image/ProductImage";
 
 type ProductSlideshowProps = {
   images: string[];
@@ -25,10 +25,6 @@ export const ProductSlideshow = (pops: ProductSlideshowProps) => {
   return (
     <div className={className}>
       <Swiper
-        style={{
-          "--swiper-navigation-color": "#fff",
-          "--swiper-pagination-color": "#fff",
-        }}
         spaceBetween={10}
         navigation={true}
         autoplay={{ delay: 2500 }}
@@ -37,8 +33,8 @@ export const ProductSlideshow = (pops: ProductSlideshowProps) => {
       >
         {images.map((image) => (
           <SwiperSlide key={image}>
-            <Image
-              src={`/products/${image}`}
+            <ProductImage
+              src={image}
               alt={title}
               width={1024}
               height={800}
@@ -59,7 +55,7 @@ export const ProductSlideshow = (pops: ProductSlideshowProps) => {
       >
         {images.map((image) => (
           <SwiperSlide key={image}>
-            <Image
+            <ProductImage
               src={`/products/${image}`}
               alt={title}
               width={300}

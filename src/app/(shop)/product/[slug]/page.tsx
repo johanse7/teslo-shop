@@ -8,6 +8,7 @@ import {
 } from "@/components";
 import { titleFont } from "@/config/fonts";
 import type { Metadata, ResolvingMetadata } from "next";
+import { notFound } from "next/navigation";
 import { AddToCart } from "./ui/AddToCart";
 
 type ProductPageProps = {
@@ -27,12 +28,12 @@ export async function generateMetadata(
   const product = await getProductBySlug(slug);
 
   return {
-    title: product.title,
-    description: product.description,
+    title: product?.title,
+    description: product?.description,
     openGraph: {
-      title: product.title,
-      description: product.description,
-      images: [`/product/${product.images[1]}`],
+      title: product?.title,
+      description: product?.description,
+      images: [`/product/${product?.images?.[1]}`],
     },
   };
 }

@@ -5,7 +5,7 @@ import { titleFont } from "@/config/fonts";
 import { useEffect, useState } from "react";
 
 type StockLabelProps = {
-  slug: String;
+  slug: string;
 };
 
 export const StockLabel = (props: StockLabelProps) => {
@@ -14,14 +14,14 @@ export const StockLabel = (props: StockLabelProps) => {
   const [isLoadng, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getStock();
-  }, []);
+    const getStock = async () => {
+      const stock = await getStockBySlug(slug);
+      setStock(stock);
+      setIsLoading(false);
+    };
 
-  const getStock = async () => {
-    const stock = await getStockBySlug(slug);
-    setStock(stock);
-    setIsLoading(false);
-  };
+    getStock();
+  }, [slug]);
 
   return (
     <>
