@@ -7,7 +7,9 @@ export default async function AddressPage() {
   const session = await auth();
   const countries = await getCountries();
 
-  if (!session?.user) return null;
+  if (!session?.user) return {
+    
+  };
 
   const address = await getUserAddress(session.user.id);
 

@@ -4,7 +4,7 @@ import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 import prisma from "./lib/prisma";
 
-const PAGES = ["/checkout", "/orders"];
+const PAGES = ["/checkout", "/orders", "/checkout/address"];
 
 export const authConfig = {
   pages: {
